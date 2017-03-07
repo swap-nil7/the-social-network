@@ -1,32 +1,12 @@
 <?php
-ob_start();
-$host="192.168.121.187";
-$username="first_year";
-$password="first_year";
-$db_name="first_year_db";
-$table="swap_profiles";
+session_start();
 
-$conn=new mysqli($host, $username, $password, $db_name);
-if ($conn->connect_error){
-  die("Connection failed: " . $conn -> connect_error);
+if(isset($_SESSION['email'])){
+  echo $_SESSION['email'] . "session";
 }
-
-
-$email=$_POST['email'];
-$pass=($_POST['password']);
-$check=$_POST['check'];
-echo $check;
-
-$sql="SELECT * FROM $table WHERE email='$email' and password='$pass'";
-$result=mysqli_query($conn, $sql);
-
-
-$count=mysqli_num_rows($result);
-if ($count==1) {
-      echo "Success! $count";
-} else {
-      echo "Unsuccessful! $count";
+else if(isset($_COOKIE['email'])){
+  echo $_COOKIE['email'] . "cookie";
 }
-
-ob_end_flush();
 ?>
+
+<a href="logout.php">Logout</a>
