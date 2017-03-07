@@ -1,0 +1,147 @@
+
+
+body{
+
+background: linear-gradient(white, lightblue 20%, white);
+
+height: 100%;
+
+margin: 0;
+
+        background-repeat: no-repeat;
+
+        background-attachment: fixed;
+
+}
+
+
+
+.main{
+
+background: linear-gradient(90deg, #b6eae1 10%, #D2FBAD 90%); 
+
+            text-align: center;
+
+height: 100%;
+
+width: 30%;
+
+       margin-left: auto;
+
+       margin-right: auto;
+
+border: 8px #b6eae1 solid;
+
+        margin-top: 20px;
+
+        box-shadow: 2px 2px 2px 3px;
+
+}
+
+h1{
+
+  margin-top: 20px;
+
+  text-align: center;
+
+color: purple;
+
+       font-size: 2.5em;
+
+       font-weight: bolder;
+
+}
+
+
+
+ul{
+
+  list-style-type: none;
+
+  padding-left: 0px;
+
+}
+
+.input{
+
+margin: 10px 10px 10px 10px;
+
+        font-size: 1.0em;
+
+padding: 6px;
+
+         border-radius: 2px;
+
+border: 0px;
+
+        border-bottom: 4px solid lightblue;
+
+color: blue;
+
+width: 60%  ;
+
+}
+
+
+
+
+
+.div1{
+
+  margin-right: auto;
+
+  margin-left: auto;
+
+}
+
+
+
+
+
+.select{
+
+  margin-left: 0px;
+
+  font-size: 1em;
+
+  background-color: white;
+
+color: purple;
+
+       margin-top: 15px;
+
+       border-radius: 0px;
+
+}
+
+
+
+#term{
+
+  margin-top: 20px;
+
+  font-size: 90%; 
+
+}
+
+.button{
+
+display: inline-block;
+
+         font-size: 1.1em;
+
+color:  #6c3483 ;
+
+background: lightyellow;
+
+            margin-bottom: 5%;
+
+}
+
+.button:hover{
+
+transform: scale(1.02);
+
+           box-shadow: 0.5px 0.5px 0.5px 0.5px  #c39bd3 ;
+
+}
