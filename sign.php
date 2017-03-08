@@ -1,4 +1,62 @@
-<!DOCTYPE html>
+<?php
+
+    session_start();
+?>
+<?php
+if(isset($_POST['submit'])){
+include 'data.php';
+$name=$username=$email=$mobile=$password=$validpassword="";
+$nameErr=$usernameErr=$emailErr=$mobileErr=$validpasswordErr="";
+$total=0;
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+  $name = $_POST["name"];
+  $username= $_POST["user"];
+  $email= $_POST["email"];
+  $mobile= $_POST["mobile"];
+  $password= $_POST["password"];
+  $validpassword= $_POST["validpassword"];
+}
+
+  if(!preg_match('/^[a-zA-Z ]*$/' , $name)){
+    $nameErr="valid name required";
+  }
+  else $total++;
+
+  if(!preg_match('/^[a-zA-Z0-9]+([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*[a-zA-Z0-9]+$/' , $username)){
+    $usernameErr="valid username required";
+  }
+  else $total++;
+
+  if(!preg_match('/(\+91[\-\s]?)?[0]?(91)?[789]\d{9}/' , $mobile)){
+    $mobileErr="valid mobile number required";
+  }
+  else $total++;
+
+  if(!preg_match('/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/' , $email)){
+    $emailErr="valid email required";
+  }
+  else $total++;
+
+  if($password!=$validpassword){
+    $validpasswordErr="password does not match";
+  }
+  else $total++;
+
+  if($total==5){
+    $_SESSION["username"]=$username;
+    $_SESSION["name"]=$name;
+    $_SESSION["email"]=$email;
+    $_SESSION["mobile"]=$mobile;
+    echo $_SESSION["username"];
+   header("Location: index.php"); 
+    data($name, $username, $email, $mobile, $password);
+  }
+  else{
+    echo "enter valid credentials";
+  }
+}
+?>
+
 
 <html>
 
@@ -18,7 +76,7 @@
 
 <h1>Sign Up</h1>
 
-<form method="post" action="index.php">
+<form method="post" action="sign.php">
 
 <ul>
 
@@ -93,6 +151,5 @@
 </div>
 
 </body>
-
 </html>
 

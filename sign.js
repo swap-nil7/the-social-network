@@ -19,8 +19,6 @@ function mobiles(){
 
 }
 
-
-
 function validpass(){
 
   var x=document.getElementById("pass").value;
@@ -104,5 +102,17 @@ function userval(){
     document.getElementById("username").style.borderColor="lightblue";
 
   }
+}
 
+function ageval(){
+  var x=document.getElementById("age").value;
+  x = x.toString();
+  console.log(x);
+  var reg="/^[0-9]*$/";
+  if(x.match(reg)==null){
+    document.getElementById("age").style.borderColor="red";
+  }
+  else{
+    document.getElementById("age").style.borderColor="lightblue";
+  }
 }

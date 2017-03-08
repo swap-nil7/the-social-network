@@ -1,5 +1,5 @@
 <?php
-function data($name, $username, $email, $mobile, $password){
+function data($name, $username, $mobile, $age, $branch, $interests, $email){
   $servername="192.168.121.187";
   $users="first_year";
   $pass="first_year";
@@ -9,17 +9,12 @@ function data($name, $username, $email, $mobile, $password){
   if ($conn->connect_error) {
    die("Connection failed: " . $conn->connect_error);
   }
-
-$sql = "INSERT INTO swap_profiles (name, email, mobile, password, username)
-  VALUES ('$name', '$email', '$mobile', '$password', '$username')";
-
+$sql="UPDATE swap_profiles SET name= '$name', username='$username', mobile='$mobile', age='$age', branch='$branch', interests='$interests' where email='$email'";
 if ($conn->query($sql) === TRUE) {
-      echo "New record created successfully";
+      echo "Record updated successfully";
 }
 else {
       echo "Error: " . $sql . "<br>" . $conn->error;
 }
 }
-
-
-
+?>
