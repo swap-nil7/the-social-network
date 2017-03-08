@@ -90,6 +90,7 @@ if ($conn->connect_error){
   else{
         session_start();
         $_SESSION['email']=$email;
+        echo "Sessoin set";
   }
       echo "user logged in";
       header("Location: logins.php");
