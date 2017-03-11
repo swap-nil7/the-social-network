@@ -1,21 +1,27 @@
 <?php
 
-    session_start();
+session_start();
 ?>
 <?php
 if(isset($_POST['submit'])){
-include 'data.php';
-$name=$username=$email=$mobile=$password=$validpassword="";
-$nameErr=$usernameErr=$emailErr=$mobileErr=$validpasswordErr="";
-$total=0;
-if($_SERVER["REQUEST_METHOD"]=="POST"){
-  $name = $_POST["name"];
-  $username= $_POST["user"];
-  $email= $_POST["email"];
-  $mobile= $_POST["mobile"];
-  $password= $_POST["password"];
-  $validpassword= $_POST["validpassword"];
-}
+  include 'data.php';
+
+  function test($data){
+    $data=stripslashes($data);
+    $data=htmlspecialchars($data);
+    return $data;
+  }
+  $name=$username=$email=$mobile=$password=$validpassword="";
+  $nameErr=$usernameErr=$emailErr=$mobileErr=$validpasswordErr="";
+  $total=0;
+  if($_SERVER["REQUEST_METHOD"]=="POST"){
+    $name = test($_POST["name"]);
+    $username= test($_POST["user"]);
+    $email= test($_POST["email"]);
+    $mobile= test($_POST["mobile"]);
+    $password= test($_POST["password"]);
+    $validpassword= test($_POST["validpassword"]);
+  }
 
   if(!preg_match('/^[a-zA-Z ]*$/' , $name)){
     $nameErr="valid name required";
@@ -34,26 +40,26 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
   if(!preg_match('/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/' , $email)){
     $emailErr="valid email required";
-  }
-  else $total++;
+}
+else $total++;
 
-  if($password!=$validpassword){
-    $validpasswordErr="password does not match";
-  }
-  else $total++;
+if($password!=$validpassword){
+  $validpasswordErr="password does not match";
+}
+else $total++;
 
-  if($total==5){
-    $_SESSION["username"]=$username;
-    $_SESSION["name"]=$name;
-    $_SESSION["email"]=$email;
-    $_SESSION["mobile"]=$mobile;
-    echo $_SESSION["username"];
-   header("Location: index.php"); 
-    data($name, $username, $email, $mobile, $password);
-  }
-  else{
-    echo "enter valid credentials";
-  }
+if($total==5){
+  $_SESSION["username"]=$username;
+  $_SESSION["name"]=$name;
+  $_SESSION["email"]=$email;
+  $_SESSION["mobile"]=$mobile;
+  echo $_SESSION["username"];
+  header("Location: index.php"); 
+  data($name, $username, $email, $mobile, md5($password));
+}
+else{
+  echo "enter valid credentials";
+}
 }
 ?>
 
@@ -67,6 +73,23 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 <link rel="stylesheet" type="text/css" href="style.css">
 
 <script type="text/javascript" src="sign.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+    $("#username").blur(function () {
+      var username = $(this).val();
+      if (username == '') {
+      $("#availability").html("");
+      }else{
+      $.ajax({
+url: "validation.php?uname="+username
+}).done(function( data ) {
+  $("#availability").html(data);
+  }); 
+      } 
+      });
+    });
+</script>
 
 </head>
 
@@ -90,6 +113,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 <li><input type="text" id="username" name="user" class="input" placeholder="Enter username" onchange="userval()" required></li>
 <span class="error"><?php if(isset($username)){echo $usernameErr;}?></span>
+<div id="availability"></div>
 
 <li><input type="text" id="mobile" name="mobile" class="input"  placeholder="Enter mobile num" onchange="mobiles()" required="required"></li>
 <span class="error"><?php if(isset($mobile)){echo $mobileErr;}?></span>

@@ -1,15 +1,8 @@
 <?php
 session_start();
-if(isset($_SESSION['email'])){
-  echo "Hi! " . $_SESSION['email'] . " session";
-  $email=$_SESSION['email'];
-}
-else if(isset($_COOKIE['email'])){
-  echo "Hi! " . $_COOKIE['email'] . " cookie";
-  $email=$_COOKIE['email'];
-}
+include 'convert.php';
 
-$servername="192.168.121.187";
+  $servername="192.168.121.187";
   $users="first_year";
   $pass="first_year";
   $database="first_year_db";
@@ -17,7 +10,16 @@ $servername="192.168.121.187";
   $conn = new mysqli($servername, $users, $pass, $database);
   if ($conn->connect_error) {
    die("Connection failed: " . $conn->connect_error);
-  }
+}
+
+if(isset($_SESSION['email'])){
+  echo "Hi! " . $_SESSION['email'] . " session";
+  $email=($_SESSION['email']);
+}
+else if(isset($_COOKIE['email'])){
+  echo "Hi! " . convert($_COOKIE['email']) . " cookie";
+  $email=convert($_COOKIE['email']);
+}
 
 $sql = "SELECT * from swap_feed";
 $result = $conn->query($sql);
@@ -40,7 +42,6 @@ if(isset($_POST['post'])){
   VALUES ('$email', '$feed', '$times')";
    echo "By " . $email . " time  " . $times . " : " . $feed . "<br>";
 if ($conn->query($sql) === TRUE) {
-      echo "New record created successfully";
 }
 else {
       echo "Error: " . $sql . "<br>" . $conn->error;

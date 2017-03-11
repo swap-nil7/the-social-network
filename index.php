@@ -4,17 +4,31 @@ session_start();
 <?php
 if(isset($_POST['submit'])){
   include 'data1.php';
+
+function test($data){
+  $data=stripslashes($data);
+  $data=htmlspecialchars($data);
+  return $data;
+}
+
+
   $name=$username=$mobile=$age=$branch=$interests="";
   if($_SERVER["REQUEST_METHOD"]=="POST"){
-    $name= $_POST["name"];
-    $username= $_POST["user"];
-    $mobile= $_POST["mobile"];
-    $age= $_POST["age"];
-    $branch= $_POST["branch"];
-    $interests= $_POST["interests"];
+    $name= test($_POST["name"]);
+    $username= test($_POST["user"]);
+    $mobile= test($_POST["mobile"]);
+    $age= test($_POST["age"]);
+    $branch= test($_POST["branch"]);
+    $interests= test($_POST["interests"]);
     $email= $_POST["email"];
   }
   data($name, $username, $mobile, $age, $branch, $interests, $email);
+  if($age){
+    header("Location: profile.php");
+  }
+  else{
+    echo "Age is a compulsory feed";
+  }
 }
 ?>
 
@@ -38,16 +52,13 @@ if(isset($_POST['submit'])){
 
 <li><input type="text" id="mobile" name="mobile" class="input"  value= <?php echo $_SESSION["mobile"]; ?> onchange="mobiles()" required="required"></li>
 
-<li><input type="text" id="age" name="age" class="input"  placeholder="Enter age" onchange="ageval()" required="required">
+<li><input type="number" id="age" name="age" class="input"  placeholder="Enter age" required="required">
 
 <li><input type="text" id="branch" name="branch" class="input"  placeholder="Enter branch(optional)"></li>
 
 <li><input type="text" id="interests" name="interests" class="input"  placeholder="Enter your interests(optional)"></li><br>
 
 <li><input type="submit" value="submit" name="submit"><br><br>
-<li><a href="change.php">Change password</a><br><br>
-<li><a href="">Update profile picture</a><br><br>
-<li><a href="">Update cover photo</a><br><br>
 <li><a href="logout.php">Logout</a>
 
 </form>
